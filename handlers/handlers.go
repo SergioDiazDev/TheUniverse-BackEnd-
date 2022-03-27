@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/SergioDiazRuiz/TheUniverse/middlew"
+	"github.com/SergioDiazRuiz/TheUniverse/routers"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -13,6 +15,8 @@ import (
 func Gestor() {
 
 	router := mux.NewRouter()
+
+	router.HandleFunc("/registro", middlew.CheckBD(routers.Registro)).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
