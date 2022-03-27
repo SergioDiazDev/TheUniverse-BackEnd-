@@ -17,6 +17,7 @@ func Gestor() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/registro", middlew.CheckBD(routers.Registro)).Methods("POST")
+	router.HandleFunc("/login", middlew.CheckBD(routers.Login)).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
