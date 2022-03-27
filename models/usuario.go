@@ -10,7 +10,7 @@ import (
 type Usuario struct {
 	ID              primitive.ObjectID `bson:"_id, omitempty" json:"id"`
 	Nombre          string             `bson:"nombre",  json:"nombre",omitempty`
-	FechaNacimineto time.Time          `bson:"fechaNacimineto" json:"fechaNacimineto",omitempty`
+	FechaNacimiento time.Time          `bson:"fechaNacimiento" json:"fechaNacimiento",omitempty`
 	FechaRegistro   time.Time          `bson:"fechaRegistro" json:"fechaRegistro",omitempty`
 	Correo          string             `bson:"correo" json:"correo"`
 	Pass            string             `bson:"contraseña" json:"contraseña",omitempty`
