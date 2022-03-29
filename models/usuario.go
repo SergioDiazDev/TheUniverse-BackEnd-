@@ -8,7 +8,7 @@ import (
 
 //Usuario modelo usuario de la BD
 type Usuario struct {
-	ID              primitive.ObjectID `bson:"_id, omitempty" json:"id"`
+	ID              primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Nombre          string             `bson:"nombre" json:"nombre,omitempty"`
 	FechaNacimiento time.Time          `bson:"fechaNacimiento" json:"fechaNacimiento,omitempty"`
 	FechaRegistro   time.Time          `bson:"fechaRegistro" json:"fechaRegistro,omitempty"`
