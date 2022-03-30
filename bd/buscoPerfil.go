@@ -30,7 +30,7 @@ func BuscoPerfil(ID string) (models.Usuario, error) {
 
 	perfil.Pass = ""
 	if err != nil {
-		fmt.Println("Registro no encontrado" + err.Error())
+		fmt.Println("Registro no encontrado.[ERROR]" + err.Error())
 		return perfil, err
 	}
 	return perfil, nil

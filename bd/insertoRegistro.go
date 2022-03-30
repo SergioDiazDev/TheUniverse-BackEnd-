@@ -2,6 +2,7 @@ package bd
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/SergioDiazRuiz/TheUniverse/models"
@@ -9,7 +10,7 @@ import (
 )
 
 //InsertoRegistro Es la conexión final con la BD para insertar usuarios
-func InsertoRegistro(u models.Usuario) (string, bool, error) {
+func InsertoRegistro(u models.Usuario) (primitive.ObjectID, bool, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
@@ -22,10 +23,13 @@ func InsertoRegistro(u models.Usuario) (string, bool, error) {
 	result, err := col.InsertOne(ctx, u)
 
 	if err != nil {
-		return "", false, err
+		return primitive.ObjectID{}, false, err
 	}
-
+	fmt.Println(u.ID)
 	ObjID, _ := result.InsertedID.(primitive.ObjectID)
+	u.ID = ObjID
+	fmt.Println(ObjID)
+	fmt.Println(u.ID)
 
-	return ObjID.String(), true, nil
+	return ObjID, true, nil
 }
