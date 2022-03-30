@@ -9,6 +9,7 @@ import (
 )
 
 //CheckYaExisteUsuario recibe un email de paramentro y mira si existe en la BD
+//|true->Exite ya el Correo
 func CheckYaExisteUsuario(correo string) (models.Usuario, bool, string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
