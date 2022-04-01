@@ -2,6 +2,7 @@ package bd
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/SergioDiazRuiz/TheUniverse/models"
@@ -31,27 +32,32 @@ func ModificoRegistro(u models.Usuario, ID primitive.ObjectID) (bool, error) {
 	if len(u.Biografia) > 0 {
 		registro["biografia"] = u.Biografia
 	}
-	if len(u.Correo) > 0 {
-		registro["correo"] = u.Correo
-	}
-	//No se puede pasar la contraseña sin encriptar
+	//No se puede pasar la contraseña sin encriptar v/
 	if len(u.Pass) > 0 {
-		registro["contraseña"] = u.Pass
+		PassEn, _ := EncriptarPass(u.Pass)
+		registro["contraseña"] = PassEn
 	}
 	if len(u.SitioWeb) > 0 {
 		registro["sitioWeb"] = u.SitioWeb
 	}
-	//Error de conversion intervace string
-	correo := registro["correo"]
-	correoString := correo.(string)
-	_, correoUsado, _ := CheckYaExisteUsuario(string(correoString))
 
-	if correoUsado {
-		if u.Correo == correoString {
+	_, correoUsado, _ := CheckYaExisteUsuario(u.Correo)
+
+	t, _ := BuscoPerfil(ID.Hex())
+
+	//Cambio el todo menos el correo si es el mismo o esta ya registrado
+	//Problema: No muestra el error de que el correo ya esta registrado
+	var errr error
+	if !correoUsado {
+		if len(u.Correo) > 0 {
 			registro["correo"] = u.Correo
+		}
 
+	} else {
+		if t.Correo == u.Correo {
+			errr = errors.New(" Este es tu correo actual")
 		} else {
-			return false, nil
+			errr = errors.New(" Este correo ya se encuentra registrado")
 		}
 	}
 
@@ -66,5 +72,6 @@ func ModificoRegistro(u models.Usuario, ID primitive.ObjectID) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	return true, nil
+
+	return true, errr
 }
