@@ -20,6 +20,13 @@ func Gestor() {
 	router.HandleFunc("/login", middlew.CheckBD(routers.Login)).Methods("POST")
 	router.HandleFunc("/verperfil", middlew.CheckBD(middlew.ValidoJWT(routers.VerPerfil))).Methods("GET")
 	router.HandleFunc("/modificarPerfil", middlew.CheckBD(middlew.ValidoJWT(routers.ModificarPerfil))).Methods("PUT")
+	router.HandleFunc("/foto", middlew.CheckBD(middlew.ValidoJWT(routers.GraboFoto))).Methods("POST")
+	router.HandleFunc("/subirAvatar", middlew.CheckBD(middlew.ValidoJWT(routers.SubirAvatar))).Methods("POST")
+	router.HandleFunc("/obtenerAvatar", middlew.CheckBD(routers.ObtenerAvatar)).Methods("GET")
+	router.HandleFunc("/altaRelacion", middlew.CheckBD(middlew.ValidoJWT(routers.AltaRelacion))).Methods("POST")
+	router.HandleFunc("/bajaRelacion", middlew.CheckBD(middlew.ValidoJWT(routers.BajaRelacion))).Methods("DELETE")
+	router.HandleFunc("/consultaRelacion", middlew.CheckBD(middlew.ValidoJWT(routers.ConsultaRelacion))).Methods("GET")
+	router.HandleFunc("/listaUsuarios", middlew.CheckBD(middlew.ValidoJWT(routers.ListaUsuarios))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {

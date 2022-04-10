@@ -55,6 +55,8 @@ func ModificoRegistro(u models.Usuario, ID primitive.ObjectID) (bool, error) {
 
 	} else {
 		if t.Correo == u.Correo {
+			//Modifica correo pero muestra el error
+			registro["correo"] = u.Correo
 			errr = errors.New(" Este es tu correo actual")
 		} else {
 			errr = errors.New(" Este correo ya se encuentra registrado")
